@@ -6,7 +6,7 @@
 #    By: rsathiad <3kiraj@gmail.com>                +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/07/09 08:38:15 by rsathiad          #+#    #+#              #
-#    Updated: 2018/09/06 15:13:59 by rsathiad         ###   ########.fr        #
+#    Updated: 2018/09/06 15:46:26 by rsathiad         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -37,7 +37,7 @@ libftbasic =	ft_memset.c ft_bzero.c ft_memcpy.c ft_memccpy.c ft_memmove.c \
 		ft_putchar.c ft_putstr.c ft_putendl.c ft_putnbr.c ft_putchar_fd.c \
 		ft_putstr_fd.c ft_putendl_fd.c ft_putnbr_fd.c ft_lstnew.c ft_itoabase.c \
 		ft_lstdelone.c ft_lstdel.c ft_lstadd.c ft_lstiter.c ft_lstmap.c \
-		ft_setbit.c ft_clearbit.c ft_uintmaxtoa_base.c
+		ft_setbit.c ft_clearbit.c ft_uintmaxtoa_base.c ft_subnjoin.c
 
 
 printf =	ft_printf.c assembler.c conversion.c precisionandwidth.c \
