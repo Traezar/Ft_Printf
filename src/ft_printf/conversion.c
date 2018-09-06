@@ -1,0 +1,90 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   conversion.c                                       :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: rsathiad <3kiraj@gmail.com>                +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2018/09/03 22:32:16 by rsathiad          #+#    #+#             */
+/*   Updated: 2018/09/03 22:46:24 by rsathiad         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
+#include "../../includes/ft_printf.h"
+
+char	*conversionblockunpacker(const char *format)
+{
+	int		len;
+	char	*ret;
+
+	ret = NULL;
+	len = 0;
+	while (isconversionchr(format[len]) == 1)
+		len++;
+	ret = ft_strsub(format, 0, len + 1);
+	return (ret);
+}
+
+int		isconversionchr(char c)
+{
+	char *s;
+
+	s = "sSpdDioOuUxXcC\0";
+	while (*s != '\0')
+	{
+		if (*s++ == c)
+			return (c);
+	}
+	return (1);
+}
+
+char	flaghandler(char *str)
+{
+	unsigned char	store;
+
+	store = 0;
+	while (isconversionchr(*str) == 1)
+	{
+		if (*str == '#')
+			ft_setbit(store, 0);
+		else if (*str == '+')
+			ft_setbit(store, 1);
+		else if (*str == ' ')
+			ft_setbit(store, 2);
+		else if (*str == '-')
+		{
+			if (store & ZERO_P)
+				ft_clearbit(store, 4);
+			ft_setbit(store, 3);
+		}
+		if (*str == '0' && (!(ft_isdigit(*str) && *str != '0')))
+			ft_setbit(store, 4);
+		str++;
+	}
+	if (isconversionchr(*str) == 'p')
+		ft_setbit(store, 0);
+	return (store);
+}
+
+int		modihandler(char *str)
+{
+	int				i;
+	unsigned char	store;
+
+	i = 0;
+	store = 0;
+	if (str[i] == 'h' && str[i + 1] != 'h')
+		return (1);
+	else if (str[i] == 'h' && str[i + 1] == 'h')
+		return (2);
+	else if (str[i] == 'l' && str[i + 1] != 'l')
+		return (4);
+	else if (str[i] == 'l' && str[i + 1] == 'l')
+		return (8);
+	else if (str[i] == 'j')
+		return (16);
+	else if (str[i] == 'z')
+		return (32);
+	else
+		return (0);
+}
