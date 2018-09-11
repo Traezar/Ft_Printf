@@ -17,11 +17,11 @@ t_fmtblk	formatblockmaker(char *str)
 	t_fmtblk	store;
 
 	store.flagstore = flaghandler(str);
-	while (!(ft_isdigit(*str)) && isconversionchr(*str) == 1)
+	while (!(isflag(*str) == 1))
 		str++;
 	if (ft_isdigit(*str))
 		store.width = ft_atoi(str);
-	while (*str != '.' && (isconversionchr(*str) == 1))
+	while (*str != '.' && (isconversionchr(*str) == 1) && (ismodi(*str) == 1))
 		str++;
 	if (*str == '.')
 		str++;
@@ -38,6 +38,19 @@ t_fmtblk	formatblockmaker(char *str)
 	return (store);
 }
 
+int		ismodi(char c)
+{
+	char *s;
+
+	s = "hljtzq\0";
+	while (*s != '\0')
+	{
+		if (*s++ == c)
+			return (c);
+	}
+	return (1);
+}
+
 char		*functiondispatcher(char chr, t_fmtblk head, va_list ap)
 {
 	char *(*f)(char chr, t_fmtblk head, va_list ap);
@@ -51,13 +64,17 @@ char		*functiondispatcher(char chr, t_fmtblk head, va_list ap)
 		(f) = &print_o;
 	else if (chr == 'u' || chr == 'U')
 		(f) = &print_u;
-	else if (chr == 'x' || chr == 'X')
-		(f) = &print_xp;
+	else if (chr == 'x')
+		(f) = &print_x;
+	else if (chr == 'X')
+		(f) = &print_X;
 	else if (chr == 'c' || chr == 's')
 		(f) = &print_cs;
 	else if (chr == 'p')
-		(f) = &print_xp;
+		(f) = &print_x;
 	if (chr == 'i')
 		(f) = &print_d;
+	if (chr == '%')
+		return (print_per(head));
 	return ((*f)(chr, head, ap));
 }

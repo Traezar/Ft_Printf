@@ -15,8 +15,10 @@
 unsigned char	ft_setbit(char name, int position)
 {
 	unsigned int mask;
+	int						ret;
 
 	mask = 0;
 	mask = 1 << position;
-	return (mask | name);
+	ret = (mask | name);
+	return(ret);
 }

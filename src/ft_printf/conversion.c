@@ -25,11 +25,24 @@ char	*conversionblockunpacker(const char *format)
 	return (ret);
 }
 
+char	isflag(char c)
+{
+	char *s;
+
+	s = "0+ -#\0";
+	while (*s != '\0')
+	{
+		if (*s++ == c)
+			return (c);
+	}
+	return (1);
+}
+
 int		isconversionchr(char c)
 {
 	char *s;
 
-	s = "sSpdDioOuUxXcC\0";
+	s = "sSpdDioOuUxXcC%\0";
 	while (*s != '\0')
 	{
 		if (*s++ == c)
@@ -43,26 +56,26 @@ char	flaghandler(char *str)
 	unsigned char	store;
 
 	store = 0;
+	if (*str == '0' )
+		store = ft_setbit(store, 4);
 	while (isconversionchr(*str) == 1)
 	{
 		if (*str == '#')
-			ft_setbit(store, 0);
+			store = ft_setbit(store, 0);
 		else if (*str == '+')
-			ft_setbit(store, 1);
+			store = ft_setbit(store, 1);
 		else if (*str == ' ')
-			ft_setbit(store, 2);
+			store = ft_setbit(store, 2);
 		else if (*str == '-')
-		{
-			if (store & ZERO_P)
-				ft_clearbit(store, 4);
-			ft_setbit(store, 3);
-		}
-		if (*str == '0' && (!(ft_isdigit(*str) && *str != '0')))
-			ft_setbit(store, 4);
+			store = ft_setbit(store, 3);
 		str++;
 	}
-	if (isconversionchr(*str) == 'p')
-		ft_setbit(store, 0);
+	if (isconversionchr(*str) == 'O' || isconversionchr(*str) == 'X')
+			store = ft_setbit(store, 5);
+	if ((store & BLNK_P) && (store & SIGNED))
+		store = ft_clearbit(store, 2);
+	if ((store & ZERO_P) && (store & RT_P))
+		store = ft_clearbit(store, 2);
 	return (store);
 }
 

@@ -12,28 +12,7 @@
 
 #include "../../includes/ft_printf.h"
 
-char	*pnf_d(int width, unsigned char flags, int preci, char *con)
-{
-	char	padding;
-	char	*tmp;
-	char	*ret;
 
-	if (flags & ZERO_P)
-		padding = '0';
-	if (flags & BLNK_P || flags == '\0' || preci)
-		padding = ' ';
-	tmp = con;
-	if ((int)ft_strlen(con) < preci)
-		tmp = addprecisiondioux(preci, con);
-	ret = addblanknsign(ft_atoi(con), flags, tmp);
-	if ((int)ft_strlen(con) < width)
-	{
-		tmp = addwidth(width, padding, flags, ret);
-		ft_strdel(&ret);
-		return (tmp);
-	}
-	return (ret);
-}
 
 char	*pnf_s(int width, unsigned char flags, int preci, char *con)
 {
@@ -46,14 +25,8 @@ char	*pnf_s(int width, unsigned char flags, int preci, char *con)
 	if (flags & BLNK_P || flags == '\0')
 		padding = ' ';
 	tmp = con;
-	if ((int)ft_strlen(con) > preci)
 		tmp = addprecisioncs(preci, con);
-	else
-		ret = tmp;
-	if ((int)ft_strlen(con) < width)
-		ret = addwidth(width, padding, flags, tmp);
-	else
-		ret = tmp;
+		ret = addwidthcs(width, flags, tmp);
 	return (ret);
 }
 
@@ -69,12 +42,8 @@ char	*pnf_u(int width, unsigned char flags, int preci, char *con)
 		padding = '0';
 	if (flags & BLNK_P || flags == '\0' || preci)
 		padding = ' ';
-	if ((int)ft_strlen(con) < preci)
-		tmp = addprecisiondioux(preci, con);
-	else
-		ret = tmp;
-	if ((int)ft_strlen(con) < width)
-		tmp = addwidth(width, padding, flags, tmp);
+	tmp = addprecisiondioux(preci, con);
+	tmp = addwidth(width, padding, flags, tmp);
 	ret = tmp;
 	return (ret);
 }
@@ -88,9 +57,6 @@ char	*pnf_c(int width, unsigned char flags, char con)
 	padding = ' ';
 	tmp = ft_strnew(1);
 	ft_memset(tmp, con, 1);
-	if ((int)ft_strlen(tmp) < width)
-		ret = addwidth(width, padding, flags, tmp);
-	else
-		ret = tmp;
+	ret = addwidth(width, padding, flags, tmp);
 	return (ret);
 }

@@ -19,7 +19,7 @@ char	*outputstringmaker(char *strlst, va_list ap, char *strtbprnt)
 	char		*unpackedconversion;
 	char		*tmp;
 
-	head = formatblockmaker(strlst++);
+	head = formatblockmaker(strlst);
 	unpackedconversion = functiondispatcher(head.conver, head, ap);
 	tmp = ft_strjoin(strtbprnt, unpackedconversion);
 	ft_strdel(&strtbprnt);
@@ -30,15 +30,17 @@ char	*outputstringmaker(char *strlst, va_list ap, char *strtbprnt)
 int		ft_printf(const char *format, ...)
 {
 	va_list ap;
-	char	*strtbprnt;
+	char		*strtbprnt;
+	int			len;
 
 	strtbprnt = NULL;
 	va_start(ap, format);
 	strtbprnt = workhorse(ap, strtbprnt, format);
 	va_end(ap);
-	write(1, strtbprnt, ft_strlen(strtbprnt));
+	len = ft_strlen(strtbprnt);
+	write(1, strtbprnt, len);
 	ft_strdel(&strtbprnt);
-	return (0);
+	return (len);
 }
 
 char	*workhorse(va_list ap, char *strtbprnt, const char *format)

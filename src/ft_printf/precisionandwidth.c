@@ -16,7 +16,7 @@ char	*addprecisioncs(int precision, char *str)
 {
 	char *ret;
 
-	if (precision < (int)ft_strlen(str))
+	if (precision)
 	{
 		ret = ft_strnew(precision);
 		ft_strncpy(ret, str, precision);
@@ -24,9 +24,31 @@ char	*addprecisioncs(int precision, char *str)
 	else
 	{
 		ret = ft_strnew(ft_strlen(str));
-		ft_strncpy(ret, str, precision);
+		ft_strncpy(ret, str, ft_strlen(str));
 	}
 	return (ret);
+}
+
+char	*addwidthcs(int width, unsigned char flags, char *str)
+{
+	char	*tmp1;
+	char	*tmp2;
+	int		len;
+
+	len = ft_strlen(str);
+	if (width <= 0 || width <= len)
+		return (str);
+	width = width - len;
+	tmp1 = ft_strnew(width);
+	tmp1 = ft_memset(tmp1, ' ', width);
+	if (flags & RT_P)
+		tmp2 = ft_strjoin(str, tmp1);
+	else
+		tmp2 = ft_strjoin(tmp1, str);
+	str = ft_strdup(tmp2);
+	ft_strdel(&tmp1);
+	ft_strdel(&tmp2);
+	return (str);
 }
 
 char	*applysharp(char *str, char c)
@@ -55,75 +77,63 @@ char	*applysharp(char *str, char c)
 		else
 			str[1] = 'X';
 	}
+
 	return (str);
 }
 
-char	*addwidth(int width, char pad, unsigned char flags, char *str)
-{
-	char	*tmp1;
-	char	*tmp2;
-	int		len;
 
-	len = ft_strlen(str);
-	if (width == 0 || width <= len)
-		return (str);
-	if (width > len)
+
+char	*addspace(int value, unsigned char flags, char *str)
+{
+	char *init;
+
+	init = ft_strnew(ft_strlen(str) + 1);
+	if ((flags & BLNK_P) && (value >= 0) && str[0] != ' ' )
 	{
-		width = width - len;
-		tmp1 = ft_strnew(width);
-		tmp1 = ft_memset(tmp1, pad, width);
-		if (flags & RT_P)
-			tmp2 = ft_strjoin(str, tmp1);
-		else
-			tmp2 = ft_strjoin(tmp1, str);
-		str = ft_strdup(tmp2);
-		ft_strdel(&tmp1);
-		ft_strdel(&tmp2);
+		ft_memset(init,' ',1);
+		ft_strcpy(init + 1, str);
 	}
-	return (str);
+	else
+		ft_strcpy(init,str);
+	ft_strdel(&str);
+	return (init);
 }
 
-char	*addblanknsign(int value, unsigned char flags, char *str)
+char	*addsign(int value, unsigned char flags, char *str)
 {
-	char *ret;
-
+	char *init;
+	init = ft_strnew(ft_strlen(str) + 1);
 	if ((flags & SIGNED) && (value >= 0))
 	{
-		ret = ft_strjoin("+", str);
-		ft_strdel(&str);
+		ft_memset(init,'+',1);
+		ft_strcpy(init + 1, str);
 	}
-	else if ((flags & BLNK_P) && (value >= 0))
-	{
-		ret = ft_strjoin(" ", str);
-		ft_strdel(&str);
-	}
-	ret = str;
-	return (ret);
+	else
+		ft_strcpy(init, str);
+	return(init);
 }
 
-char	*addprecisiondioux(int precision, char *str)
+char *checkneg(int value, char pad, int preci, char *str)
 {
-	int		len;
-	char	*tmp;
-	char	*init;
+	preci = 0;
 
-	len = ft_strlen(str);
-	if (precision > len)
-		init = ft_strnew(precision);
-	else
-		return (str);
-	if (str[0] == '-')
-		len--;
-	while (precision > len++)
+	if (ft_strchr(str, ' ') == NULL)
+		pad = '0';
+	if ((value < 0)  && pad == '0')
 	{
-		tmp = ft_strjoin("0", str);
-		str = ft_strcpy(init, tmp);
-		free(tmp);
+		if (ft_strchr(str, '-') != NULL)
+		{
+			*ft_strchr(str, '-') = pad;
+			str[0] = '-';
+		}
 	}
-	if (ft_strchr(str, '-') != NULL)
+	else if ((value >= 0)  && pad == '0')
 	{
-		*ft_strchr(str, '-') = '0';
-		str[0] = '-';
+		if (ft_strchr(str, '+') != NULL)
+		{
+			*ft_strchr(str, '+') = pad;
+			str[0] = '+';
+		}
 	}
-	return (str);
+	return(str);
 }
