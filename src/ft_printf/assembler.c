@@ -87,7 +87,7 @@ char		*functiondispatcher(char chr, t_fmtblk head, va_list ap)
 	else if (chr == 'p')
 		(f) = &print_x;
 	if (chr == 'i')
-		(f) = &print_d;
+		(f) = &print_i;
 	if (chr == '%')
 		return (print_per(head));
 	return ((*f)(chr, head, ap));

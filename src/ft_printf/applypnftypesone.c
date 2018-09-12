@@ -38,9 +38,9 @@ char	*pnf_u(int width, unsigned char flags, int preci, char *con)
 
 	ret = NULL;
 	tmp = NULL;
-	if (flags & ZERO_P)
+	if (flags & ZERO_P && preci != 0 )
 		padding = '0';
-	if (flags & BLNK_P || flags == '\0' || preci)
+	else
 		padding = ' ';
 	tmp = addprecisiondioux(preci, con);
 	tmp = addwidth(width, padding, flags, tmp);

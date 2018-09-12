@@ -52,3 +52,26 @@ char	*print_per( t_fmtblk blk)
 	ret = tmp;
 	return (ret);
 }
+
+char	*print_i(char chr, t_fmtblk blk, va_list ap)
+{
+	char	*tmp;
+
+	tmp = NULL;
+	if (blk.modifier == 0 && chr == 'i')
+		tmp = ft_itoa(va_arg(ap, intmax_t));
+	else if (blk.modifier == 1 && chr == 'i')
+		tmp = ft_itoa((short) va_arg(ap, int));
+	else if (blk.modifier == 2 && chr == 'i')
+		tmp = ft_itoa((char)va_arg(ap, intmax_t));
+	else if ((blk.modifier == 4 && chr == 'i'))
+		tmp = ft_intmaxtoa_base((long) va_arg(ap, intmax_t), 10, 0);
+	else if (blk.modifier == 8 && chr == 'i')
+		tmp = ft_intmaxtoa_base((long long) va_arg(ap, intmax_t), 10, 0);
+	else if (blk.modifier == 16 && chr == 'i')
+		tmp = ft_intmaxtoa_base(va_arg(ap, intmax_t), 10, 0);
+	else if (blk.modifier == 32 && chr == 'i')
+		tmp = ft_intmaxtoa_base((size_t)va_arg(ap, intmax_t), 10, 0);
+	tmp = pnf_d(blk.width, blk.flagstore, blk.precision, tmp);
+	return (tmp);
+}

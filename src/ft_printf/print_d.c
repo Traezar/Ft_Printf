@@ -86,7 +86,7 @@ char	*addwidth(int width, char pad, unsigned char flags, char *str)
 	if (width <= 0 || width <= len)
 		return (str);
 	width = width - len;
-	tmp1 = ft_strnew(width);
+	tmp1 = ft_strnew(width + 1);
 	tmp1 = ft_memset(tmp1, pad, width);
 	if (flags & RT_P)
 		tmp2 = ft_strjoin(str, tmp1);
