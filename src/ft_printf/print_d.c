@@ -20,7 +20,7 @@ char	*print_d(char chr, t_fmtblk blk, va_list ap)
 	if (blk.modifier == 0 && chr == 'd')
 		tmp = ft_itoa(va_arg(ap, intmax_t));
 	else if (blk.modifier == 1 && chr == 'd')
-		tmp = ft_intmaxtoa_base((short) va_arg(ap, intmax_t), 10, 0);
+		tmp = ft_itoa((short) va_arg(ap, int));
 	else if (blk.modifier == 2 && chr == 'd')
 		tmp = ft_itoa((char)va_arg(ap, intmax_t));
 	else if ((blk.modifier == 4 && chr == 'd') || (chr == 'D'))

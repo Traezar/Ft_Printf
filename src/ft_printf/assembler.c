@@ -16,6 +16,7 @@ t_fmtblk	formatblockmaker(char *str)
 {
 	t_fmtblk	store;
 
+	store = formatinit(&store);
 	store.flagstore = flaghandler(str);
 	while (!(isflag(*str) == 1))
 		str++;
@@ -24,10 +25,12 @@ t_fmtblk	formatblockmaker(char *str)
 	while (*str != '.' && (isconversionchr(*str) == 1) && (ismodi(*str) == 1))
 		str++;
 	if (*str == '.')
-		str++;
-	store.precision = ft_atoi(str);
-	while (ft_isdigit(*str))
-		str++;
+	{
+		store.dot = 1;
+		store.precision = ft_atoi(++str);
+		while (ft_isdigit(*str))
+			str++;
+	}
 	if (isconversionchr(*str) == 1)
 	{
 		store.modifier = modihandler(&(*str));
@@ -36,6 +39,17 @@ t_fmtblk	formatblockmaker(char *str)
 	}
 	store.conver = *str;
 	return (store);
+}
+
+t_fmtblk	formatinit(t_fmtblk	*store)
+{
+	store->dot = 0;
+	store->width = 0;
+	store->precision = 0;
+	store->conver = 0;
+	store->flagstore = 0;
+	store->modifier = 0;
+	return(*store);
 }
 
 int		ismodi(char c)

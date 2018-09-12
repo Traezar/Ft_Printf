@@ -32,6 +32,7 @@
 
 typedef struct	s_fmt
 {
+	int				dot;
 	int				width;
 	int				precision;
 	char			conver;
@@ -46,6 +47,7 @@ int				ismodi(char c);
 char			isflag(char c);
 int				isconversionchr(char c);
 char			flaghandler(char *str);
+t_fmtblk	formatinit(t_fmtblk	*store);
 t_fmtblk		formatblockmaker(char *str);
 int				modihandler(char *str);
 char			*outputstringmaker(char *strlst, va_list ap, char *strtbprnt);

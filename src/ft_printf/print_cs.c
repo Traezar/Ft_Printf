@@ -52,17 +52,17 @@ char	*print_u(char chr, t_fmtblk blk, va_list ap)
 	char *tmp;
 
 	tmp = NULL;
-	if (blk.modifier == 1)
-		tmp = ft_uintmaxtoa_base((unsigned short) va_arg(ap, uintmax_t), 10, 1);
-	else if (blk.modifier == 2)
+	if (blk.modifier == H)
+		tmp = ft_uintmaxtoa_base((unsigned short) va_arg(ap, size_t), 10, 1);
+	else if (blk.modifier == HH)
 		tmp = ft_uintmaxtoa_base((unsigned char) va_arg(ap, uintmax_t), 10, 1);
-	else if ((blk.modifier == 4) || (chr == 'U'))
+	else if ((blk.modifier == L) || (chr == 'U'))
 		tmp = ft_uintmaxtoa_base((unsigned long) va_arg(ap, uintmax_t), 10, 1);
-	else if (blk.modifier == 8)
+	else if (blk.modifier == LL)
 		tmp = ft_uintmaxtoa_base((unsigned long long) va_arg(ap, uintmax_t), 10, 1);
-	else if (blk.modifier == 16)
+	else if (blk.modifier == J)
 		tmp = ft_uintmaxtoa_base( va_arg(ap, uintmax_t), 10, 1);
-	else if (blk.modifier == 32)
+	else if (blk.modifier == Z)
 		tmp = ft_uintmaxtoa_base((size_t) va_arg(ap, uintmax_t), 10, 1);
 	else if (blk.modifier == 0)
 		tmp = ft_uintmaxtoa_base( va_arg(ap, uintmax_t), 10, 1);

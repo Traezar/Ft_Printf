@@ -56,10 +56,11 @@ char	flaghandler(char *str)
 	unsigned char	store;
 
 	store = 0;
-	if (*str == '0' )
-		store = ft_setbit(store, 4);
-	while (isconversionchr(*str) == 1)
+	while (isconversionchr(*str) == 1 && !(ft_isdigit(*str) && *str != '0')
+	&& *str != '.')
 	{
+		if (*str == '0' )
+			store = ft_setbit(store, 4);
 		if (*str == '#')
 			store = ft_setbit(store, 0);
 		else if (*str == '+')
@@ -75,7 +76,7 @@ char	flaghandler(char *str)
 	if ((store & BLNK_P) && (store & SIGNED))
 		store = ft_clearbit(store, 2);
 	if ((store & ZERO_P) && (store & RT_P))
-		store = ft_clearbit(store, 2);
+		store = ft_clearbit(store, 4);
 	return (store);
 }
 
