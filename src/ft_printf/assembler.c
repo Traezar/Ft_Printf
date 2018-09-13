@@ -65,9 +65,9 @@ int		ismodi(char c)
 	return (1);
 }
 
-char		*functiondispatcher(char chr, t_fmtblk head, va_list ap)
+int functiondispatcher(char chr, t_fmtblk head, va_list ap)
 {
-	char *(*f)(char chr, t_fmtblk head, va_list ap);
+	int(*f)(char chr, t_fmtblk head, va_list ap);
 
 	if (((head.modifier == 4 && chr == 'c') || (chr == 'C')) ||
 			((head.modifier == 4 && chr == 's') || (chr == 'S')))

@@ -12,51 +12,51 @@
 
 #include "../../includes/ft_printf.h"
 
-char	*print_d(char chr, t_fmtblk blk, va_list ap)
+int print_d(char chr, t_fmtblk blk, va_list ap)
 {
 	char	*tmp;
+	intmax_t 	value;
 
 	tmp = NULL;
+	value = va_arg(ap, intmax_t);
 	if (blk.modifier == 0 && chr == 'd')
-		tmp = ft_itoa(va_arg(ap, intmax_t));
+		tmp = ft_itoa(value);
 	else if (blk.modifier == 1 && chr == 'd')
-		tmp = ft_itoa((short) va_arg(ap, int));
+		tmp = ft_itoa((short)value);
 	else if (blk.modifier == 2 && chr == 'd')
-		tmp = ft_itoa((char)va_arg(ap, intmax_t));
+		tmp = ft_itoa((char)value);
 	else if ((blk.modifier == 4 && chr == 'd') || (chr == 'D'))
-		tmp = ft_intmaxtoa_base((long) va_arg(ap, intmax_t), 10, 0);
+		tmp = ft_intmaxtoa_base((long) value, 10, 0);
 	else if (blk.modifier == 8 && chr == 'd')
-		tmp = ft_intmaxtoa_base((long long) va_arg(ap, intmax_t), 10, 0);
+		tmp = ft_intmaxtoa_base((long long) value, 10, 0);
 	else if (blk.modifier == 16 && chr == 'd')
-		tmp = ft_intmaxtoa_base(va_arg(ap, intmax_t), 10, 0);
+		tmp = ft_intmaxtoa_base(value, 10, 0);
 	else if (blk.modifier == 32 && chr == 'd')
-		tmp = ft_intmaxtoa_base((size_t)va_arg(ap, intmax_t), 10, 0);
-	tmp = pnf_d(blk.width, blk.flagstore, blk.precision, tmp);
-	return (tmp);
+		tmp = ft_intmaxtoa_base(value, 10, 0);
+	return (pnf_d(blk, tmp, value));
 }
 
-char	*pnf_d(int width, unsigned char flags, int preci, char *con)
+int pnf_d(t_fmtblk blk, char *con, intmax_t value)
 {
 	char	padding;
 	char	*tmp;
 	char	*ret;
-	int 	value;
 
-	value = ft_atoi(con);
-	if ( !ft_strcmp(con,"0")  && !(flags) && !preci)
-			con = "\0";
-	if (flags & ZERO_P || preci > width)
+	if (value == 0  && blk.dot)
+				con = "";
+	if (blk.flagstore & ZERO_P && blk.precision != '0')
 		padding = '0';
 	else
 		padding = ' ';
-	ret = addprecisiondioux(preci, con);
-	tmp = addsign(value, flags, ret);
-	if (width > preci && preci && width)
+	ret = addprecisiondioux(blk.precision, con);
+	tmp = addsign(value, blk.flagstore, ret);
+	if (blk.width > blk.precision && blk.precision && blk.width)
 		padding = ' ';
-	ret = addwidth(width, padding, flags, tmp);
-	tmp = addspace(value, flags, ret);
-	ret = checkneg(value, padding, preci, tmp);
-	return (ret);
+	ret = addwidth(blk.width, padding, blk.flagstore, tmp);
+	tmp = addspace(value, blk.flagstore, ret);
+	ret = checkneg(value, padding, blk.precision, tmp);
+	write(1,ret,ft_strlen(ret));
+	return (ft_strlen(ret));
 }
 
 char	*addprecisiondioux(int precision, char *str)

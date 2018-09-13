@@ -21,8 +21,7 @@ char	*conversionblockunpacker(const char *format)
 	len = 0;
 	while (isconversionchr(format[len]) == 1)
 		len++;
-	ret = ft_strsub(format, 0, len + 1);
-	return (ret);
+	return (ft_strsub(format, 0, len + 1));
 }
 
 char	isflag(char c)

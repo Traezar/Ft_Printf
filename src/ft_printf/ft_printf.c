@@ -13,18 +13,12 @@
 #include "../../includes/ft_printf.h"
 #include <stdio.h>
 
-char	*outputstringmaker(char *strlst, va_list ap, char *strtbprnt)
+int outputstringmaker(char *strlst, va_list ap)
 {
 	t_fmtblk	head;
-	char		*unpackedconversion;
-	char		*tmp;
 
 	head = formatblockmaker(strlst);
-	unpackedconversion = functiondispatcher(head.conver, head, ap);
-	tmp = ft_strjoin(strtbprnt, unpackedconversion);
-	ft_strdel(&strtbprnt);
-	strtbprnt = tmp;
-	return (strtbprnt);
+	return (functiondispatcher(head.conver, head, ap));
 }
 
 int		ft_printf(const char *format, ...)
@@ -35,36 +29,35 @@ int		ft_printf(const char *format, ...)
 
 	strtbprnt = NULL;
 	va_start(ap, format);
-	strtbprnt = workhorse(ap, strtbprnt, format);
+	len = workhorse(ap,format);
 	va_end(ap);
-	len = ft_strlen(strtbprnt);
-	write(1, strtbprnt, len);
-	ft_strdel(&strtbprnt);
 	return (len);
 }
 
-char	*workhorse(va_list ap, char *strtbprnt, const char *format)
+int workhorse(va_list ap, const char *format)
 {
 	char	*fmt;
 	char	*tmp;
 	int		i;
+	int   writelen;
 
 	i = 0;
+	writelen = 0;
 	fmt = (char*)&format[i];
-	strtbprnt = ft_strnew(0);
 	while (fmt[i] != '\0')
 	{
 		fmt = &fmt[i];
 		i = 0;
 		while (fmt[i] != '%' && fmt[i] != '\0')
 			i++;
-		strtbprnt = ft_subnjoin(strtbprnt, fmt, 0, i);
+		write(1,fmt, i);
+		writelen += i;
 		if (fmt[i] == '\0')
 			break ;
 		tmp = conversionblockunpacker(&fmt[++i]);
 		i += (ft_strlen(tmp));
-		strtbprnt = outputstringmaker(tmp, ap, strtbprnt);
+		writelen += outputstringmaker(tmp, ap);
 		ft_strdel(&tmp);
 	}
-	return (strtbprnt);
+	return (writelen);
 }

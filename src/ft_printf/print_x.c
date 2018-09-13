@@ -12,7 +12,7 @@
 
 #include "../../includes/ft_printf.h"
 
-char	*print_x(char chr, t_fmtblk blk, va_list ap)
+int print_x(char chr, t_fmtblk blk, va_list ap)
 {
 	char *tmp;
 	uintmax_t value;
@@ -33,11 +33,10 @@ char	*print_x(char chr, t_fmtblk blk, va_list ap)
 		tmp = ft_uintmaxtoa_base(value, 16, 0);
 	else if (blk.modifier == Z)
 		tmp = ft_uintmaxtoa_base((size_t)value, 16, 0);
-	tmp = pnf_x(blk, tmp, value);
-	return (tmp);
+	return (pnf_x(blk, tmp, value));
 }
 
-char	*print_X(char chr, t_fmtblk blk, va_list ap)
+int print_X(char chr, t_fmtblk blk, va_list ap)
 {
 	char *tmp;
 	uintmax_t value;
@@ -59,6 +58,5 @@ char	*print_X(char chr, t_fmtblk blk, va_list ap)
 		tmp = ft_uintmaxtoa_base((size_t)value, 16, 1);
 	else
 		tmp = ft_uintmaxtoa_base((unsigned int)value, 16, 1);
-	tmp = pnf_x(blk, tmp, value);
-	return (tmp);
+	return (pnf_x(blk, tmp, value));
 }

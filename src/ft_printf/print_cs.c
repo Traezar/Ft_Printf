@@ -12,23 +12,21 @@
 
 #include "../../includes/ft_printf.h"
 
-char	*print_cs(char chr, t_fmtblk blk, va_list ap)
+int print_cs(char chr, t_fmtblk blk, va_list ap)
 {
 	char	*tmp;
 	tmp = NULL;
 	if (chr == 'c')
 	{
 		chr = va_arg(ap, int);
-		tmp = pnf_c(blk.width, blk.flagstore, chr);
-		return (tmp);
+		return (pnf_c(blk, chr));
 	}
 	else
 		tmp = (va_arg(ap, char *));
-	tmp = pnf_s(blk.width, blk.flagstore, blk.precision, tmp);
-	return (tmp);
+	return (pnf_s(blk, tmp));
 }
 
-char	*print_wide(char chr, t_fmtblk blk, va_list ap)
+int print_wide(char chr, t_fmtblk blk, va_list ap)
 {
 	wchar_t *wctmp;
 	wchar_t *wstmp;
@@ -38,34 +36,35 @@ char	*print_wide(char chr, t_fmtblk blk, va_list ap)
 	if ((blk.modifier == 4 && chr == 'c') || chr == 'C')
 	{
 		*wctmp = va_arg(ap, wchar_t);
-		return ((char *)wctmp);
+		return (0);
 	}
 	else
 	{
 		wstmp = va_arg(ap, wchar_t*);
-		return ((char *)wstmp);
+		return (0);
 	}
 }
 
-char	*print_u(char chr, t_fmtblk blk, va_list ap)
+int print_u(char chr, t_fmtblk blk, va_list ap)
 {
 	char *tmp;
+	uintmax_t value;
 
 	tmp = NULL;
+	value =  va_arg(ap, uintmax_t);
 	if (blk.modifier == H && chr == 'u')
-		tmp = ft_uintmaxtoa_base((unsigned short) va_arg(ap, size_t), 10, 1);
+		tmp = ft_uintmaxtoa_base((unsigned short) value, 10, 1);
 	else if (blk.modifier == HH && chr == 'u')
-		tmp = ft_uintmaxtoa_base((unsigned char) va_arg(ap, uintmax_t), 10, 1);
+		tmp = ft_uintmaxtoa_base((unsigned char) value, 10, 1);
 	else if ((blk.modifier == L) || (chr == 'U'))
-		tmp = ft_uintmaxtoa_base( va_arg(ap, unsigned long), 10, 1);
+		tmp = ft_uintmaxtoa_base(value, 10, 1);
 	else if (blk.modifier == LL)
-		tmp = ft_uintmaxtoa_base((unsigned long long) va_arg(ap, uintmax_t), 10, 1);
+		tmp = ft_uintmaxtoa_base((unsigned long long) value, 10, 1);
 	else if (blk.modifier == J)
-		tmp = ft_uintmaxtoa_base( va_arg(ap, uintmax_t), 10, 1);
+		tmp = ft_uintmaxtoa_base(value, 10, 1);
 	else if (blk.modifier == Z)
-		tmp = ft_uintmaxtoa_base((size_t) va_arg(ap, uintmax_t), 10, 1);
+		tmp = ft_uintmaxtoa_base((size_t) value, 10, 1);
 	else if (blk.modifier == 0)
-		tmp = ft_uintmaxtoa_base( va_arg(ap,unsigned int), 10, 1);
-	tmp = pnf_u(blk.width, blk.flagstore, blk.precision, tmp);
-	return (tmp);
+		tmp = ft_uintmaxtoa_base((unsigned int)value, 10, 1);
+	return (pnf_u(blk, tmp));
 }

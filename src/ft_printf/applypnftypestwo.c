@@ -12,28 +12,28 @@
 
 #include "../../includes/ft_printf.h"
 
-char	*pnf_o(int width, unsigned char flags, int preci, char *con)
+int  pnf_o(t_fmtblk blk, char *con, uintmax_t value)
 {
 	char	padding;
 	char	*tmp;
 	char	*ret;
 
-	if (ft_atoi(con) == 0)
+	if (value == 0  && blk.dot)
 			con = "";
-	if (flags & ZERO_P)
+	if (blk.flagstore & ZERO_P && blk.precision != '0')
 		padding = '0';
 	else
 		padding = ' ';
-	tmp = addprecisiondioux(preci, con);
-	if (flags & SH_ON)
-		ret = applysharp(tmp, flags & O_X ? 'O':'o');
+	tmp = addprecisiondioux(blk.precision, con);
+	if (blk.flagstore & SH_ON)
+		ret = applysharp(tmp, blk.flagstore & O_X ? 'O':'o');
 	else
 		ret = tmp;
-	tmp = addwidth(width, padding, flags, ret);
-	return (tmp);
+	tmp = addwidth(blk.width, padding, blk.flagstore, ret);
+	return (write(1,tmp,ft_strlen(tmp)));
 }
 
-char	*pnf_x(t_fmtblk blk, char *con, uintmax_t value)
+int pnf_x(t_fmtblk blk, char *con, uintmax_t value)
 {
 	char	padding;
 	char	*tmp;
@@ -57,5 +57,6 @@ char	*pnf_x(t_fmtblk blk, char *con, uintmax_t value)
 		*ft_strchr(tmp,'x') = '0';
 		*(tmp + 1) = 'x';
 	}
-	return (tmp);
+	write(1,tmp,ft_strlen(tmp));
+	return (ft_strlen(tmp));
 }
