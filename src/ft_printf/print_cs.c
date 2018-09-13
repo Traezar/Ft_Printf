@@ -41,7 +41,7 @@ int print_wide(char chr, t_fmtblk blk, va_list ap)
 	else
 	{
 		wstmp = va_arg(ap, wchar_t*);
-		return (pnf_ws(blk, wstmp));
+		return (pnf_ws(wstmp));
 	}
 }
 
