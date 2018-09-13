@@ -28,20 +28,20 @@ int print_cs(char chr, t_fmtblk blk, va_list ap)
 
 int print_wide(char chr, t_fmtblk blk, va_list ap)
 {
-	wchar_t *wctmp;
+	wchar_t wctmp;
 	wchar_t *wstmp;
 
-	wctmp = NULL;
+	wctmp = 0;
 	wstmp = NULL;
 	if ((blk.modifier == 4 && chr == 'c') || chr == 'C')
 	{
-		*wctmp = va_arg(ap, wchar_t);
-		return (0);
+		wctmp = va_arg(ap, wchar_t);
+		return (pnf_wc(wctmp));
 	}
 	else
 	{
 		wstmp = va_arg(ap, wchar_t*);
-		return (0);
+		return (pnf_ws(blk, wstmp));
 	}
 }
 

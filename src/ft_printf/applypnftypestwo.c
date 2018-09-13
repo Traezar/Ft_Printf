@@ -60,3 +60,30 @@ int pnf_x(t_fmtblk blk, char *con, uintmax_t value)
 	write(1,tmp,ft_strlen(tmp));
 	return (ft_strlen(tmp));
 }
+
+int				pnf_wc(wchar_t con)
+{
+		write(1, &con, 1);
+		return (1);
+}
+
+int				pnf_ws(t_fmtblk blk, wchar_t *con)
+{
+	char *tmp;
+	int writelen;
+	char padding;
+
+	writelen = 0;
+	padding = ' ';
+	while(con != NULL)
+		writelen += pnf_wc(*con++);
+	if (blk.width > writelen)
+	{
+		tmp = ft_strnew(0);
+		tmp = addwidth(blk.width, padding, blk.flagstore, tmp);
+		writelen +=(ft_strlen(tmp));
+		write(1,tmp,ft_strlen(tmp));
+	}
+	return(writelen);
+
+}
