@@ -23,7 +23,7 @@ int print_cs(char chr, t_fmtblk blk, va_list ap)
 	}
 	else
 		tmp = (va_arg(ap, char *));
-		if (blk.star != 0)
+		if (blk.star != 0 )
 		return (0);
 	return (pnf_s(blk, tmp));
 }

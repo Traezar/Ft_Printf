@@ -42,18 +42,19 @@ int print_per( t_fmtblk blk)
 	char	padding;
 	char	*tmp;
 	char	*ret;
+	int		value;
 
-	ret = ft_strnew(1);
-	ft_memset(ret, '%', 1);
+	ret ="%\0";
 	if (blk.flagstore & ZERO_P)
 		padding = '0';
 	else
 		padding = ' ';
 	tmp = addprecisiondioux(blk.precision, ret);
-	tmp = addwidth(blk.width, padding, blk.flagstore, ret);
-	ret = tmp;
-	write(1,ret,ft_strlen(ret));
-	return (ft_strlen(ret));
+	ret = addwidth(blk.width, padding, blk.flagstore, tmp);
+	value = ft_strlen(ret);
+	write(1, ret, value);
+	ft_strdel(&ret);
+	return (value);
 }
 
 int print_i(char chr, t_fmtblk blk, va_list ap)

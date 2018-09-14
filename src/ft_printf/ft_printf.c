@@ -54,10 +54,10 @@ int workhorse(va_list ap, const char *format)
 		writelen += i;
 		if (fmt[i] == '\0')
 			break ;
-		tmp = conversionblockunpacker(&fmt[++i]);
+		tmp = conversionblockunpacker(&fmt[++i]);//m
 		i += (ft_strlen(tmp));
 		writelen += outputstringmaker(tmp, ap);
-		ft_strdel(&tmp);
+		ft_strdel(&tmp);//d
 	}
 	return (writelen);
 }

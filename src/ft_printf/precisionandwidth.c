@@ -37,7 +37,11 @@ char	*addwidthcs(int width, unsigned char flags, char *str)
 
 	len = ft_strlen(str);
 	if (width <= 0 || width <= len)
-		return (str);
+	{
+		tmp1 = ft_strdup(str);
+		ft_strdel(&str);
+		return (tmp1);
+	}
 	width = width - len;
 	tmp1 = ft_strnew(width);
 	tmp1 = ft_memset(tmp1, ' ', width);
@@ -45,6 +49,7 @@ char	*addwidthcs(int width, unsigned char flags, char *str)
 		tmp2 = ft_strjoin(str, tmp1);
 	else
 		tmp2 = ft_strjoin(tmp1, str);
+	ft_strdel(&str);
 	str = ft_strdup(tmp2);
 	ft_strdel(&tmp1);
 	ft_strdel(&tmp2);
@@ -54,6 +59,7 @@ char	*addwidthcs(int width, unsigned char flags, char *str)
 char	*applysharp(char *str, char c)
 {
 	char	*tmp;
+	char 	*ret;
 
 	if (c == 'o' || c == 'O')
 	{
@@ -77,8 +83,9 @@ char	*applysharp(char *str, char c)
 		else
 			str[1] = 'X';
 	}
-
-	return (str);
+	ret = ft_strdup(str);
+	ft_strdel(&str);
+	return (ret);
 }
 
 
@@ -110,13 +117,15 @@ char	*addsign(int value, unsigned char flags, char *str)
 	}
 	else
 		ft_strcpy(init, str);
+	ft_strdel(&str);
 	return(init);
 }
 
 char *checkneg(int value, char pad, int preci, char *str)
 {
-	preci = 0;
+	char *ret;
 
+	preci = 0;
 	if (ft_strchr(str, ' ') == NULL)
 		pad = '0';
 	if ((value < 0)  && pad == '0')
@@ -135,5 +144,7 @@ char *checkneg(int value, char pad, int preci, char *str)
 			str[0] = '+';
 		}
 	}
-	return(str);
+	ret = ft_strdup(str);
+	ft_strdel(&str);
+	return(ret);
 }

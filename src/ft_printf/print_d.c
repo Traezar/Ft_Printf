@@ -48,15 +48,17 @@ int pnf_d(t_fmtblk blk, char *con, intmax_t value)
 		padding = '0';
 	else
 		padding = ' ';
-	ret = addprecisiondioux(blk.precision, con);
-	tmp = addsign(value, blk.flagstore, ret);
+	ret = addprecisiondioux(blk.precision, con);//m
+	tmp = addsign(value, blk.flagstore, ret);//m&d
 	if (blk.width > blk.precision && blk.precision && blk.width)
 		padding = ' ';
-	ret = addwidth(blk.width, padding, blk.flagstore, tmp);
-	tmp = addspace(value, blk.flagstore, ret);
-	ret = checkneg(value, padding, blk.precision, tmp);
-	write(1,ret,ft_strlen(ret));
-	return (ft_strlen(ret));
+	ret = addwidth(blk.width, padding, blk.flagstore, tmp);//m&d
+	tmp = addspace(value, blk.flagstore, ret);//m&d
+	ret = checkneg(value, padding, blk.precision, tmp);//m&d
+	value = ft_strlen(ret);
+	write(1,ret,value);
+	ft_strdel(&ret);
+	return (value);
 }
 
 char	*addprecisiondioux(int precision, char *str)
@@ -68,8 +70,8 @@ char	*addprecisiondioux(int precision, char *str)
 	if (str[0] == '-')
 			len--;
 	if (precision <= 0 || precision <= len)
-			return (str);
-		init = ft_strnew(precision + len);
+			return (ft_strdup(str));
+	init = ft_strnew(precision + len);
 	precision = precision - len;
 	ft_memset(init, '0', precision);
 	ft_strcpy(init + precision, str);
@@ -84,7 +86,11 @@ char	*addwidth(int width, char pad, unsigned char flags, char *str)
 
 	len = ft_strlen(str);
 	if (width <= 0 || width <= len)
-		return (str);
+	{
+		tmp1 = ft_strdup(str);
+		ft_strdel(&str);
+		return (tmp1);
+	}
 	width = width - len;
 	tmp1 = ft_strnew(width + 1);
 	tmp1 = ft_memset(tmp1, pad, width);
@@ -92,6 +98,7 @@ char	*addwidth(int width, char pad, unsigned char flags, char *str)
 		tmp2 = ft_strjoin(str, tmp1);
 	else
 		tmp2 = ft_strjoin(tmp1, str);
+	ft_strdel(&str);
 	str = ft_strdup(tmp2);
 	ft_strdel(&tmp1);
 	ft_strdel(&tmp2);

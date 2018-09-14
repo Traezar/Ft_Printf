@@ -17,6 +17,7 @@ int  pnf_o(t_fmtblk blk, char *con, uintmax_t value)
 	char	padding;
 	char	*tmp;
 	char	*ret;
+	int 	retn;
 
 	if (value == 0  && blk.dot)
 			con = "";
@@ -28,9 +29,16 @@ int  pnf_o(t_fmtblk blk, char *con, uintmax_t value)
 	if (blk.flagstore & SH_ON)
 		ret = applysharp(tmp, blk.flagstore & O_X ? 'O':'o');
 	else
-		ret = tmp;
+	{
+		ret = ft_strdup(tmp);
+		ft_strdel(&tmp);
+	}
 	tmp = addwidth(blk.width, padding, blk.flagstore, ret);
-	return (write(1,tmp,ft_strlen(tmp)));
+	retn = ft_strlen(tmp);
+	write(1,tmp, retn);
+	ft_strdel(&tmp);
+	return (retn);
+
 }
 
 int pnf_x(t_fmtblk blk, char *con, uintmax_t value)
@@ -38,6 +46,7 @@ int pnf_x(t_fmtblk blk, char *con, uintmax_t value)
 	char	padding;
 	char	*tmp;
 	char	*ret;
+	int 	retn;
 
 	if (value == 0  && blk.dot)
 			con = "";
@@ -49,7 +58,10 @@ int pnf_x(t_fmtblk blk, char *con, uintmax_t value)
 	if (blk.flagstore  & SH_ON  && value != 0)
 		ret = applysharp(tmp, blk.flagstore & O_X ? 'X':'x');
 	else
-		ret = tmp;
+	{
+		ret = ft_strdup(tmp);
+		ft_strdel(&tmp);
+	}
 	tmp = addwidth(blk.width, padding,blk.flagstore, ret);
 	if ((blk.flagstore & SH_ON) && ft_strchr(tmp,'x') != (tmp + 1)
 	 	&& (blk.flagstore & ZERO_P))
@@ -57,8 +69,10 @@ int pnf_x(t_fmtblk blk, char *con, uintmax_t value)
 		*ft_strchr(tmp,'x') = '0';
 		*(tmp + 1) = 'x';
 	}
-	write(1,tmp,ft_strlen(tmp));
-	return (ft_strlen(tmp));
+	retn = ft_strlen(tmp);
+	write(1,tmp, retn);
+	ft_strdel(&tmp);
+	return (retn);
 }
 
 int				pnf_wc(wchar_t con)
@@ -71,6 +85,8 @@ int				pnf_ws(wchar_t *con)
 {
 	int writelen;
 
+	if (con == NULL)
+		return (0);
 	writelen = 0;
 	while(*con != '\0')
 		writelen += pnf_wc(*con++);
@@ -83,6 +99,7 @@ int pnf_p(t_fmtblk blk, char *con, uintmax_t value)
 	char	padding;
 	char	*tmp;
 	char	*ret;
+	int		retn;
 
 	if (value == 0  && blk.dot)
 			con = "";
@@ -91,7 +108,7 @@ int pnf_p(t_fmtblk blk, char *con, uintmax_t value)
 		padding = '0';
 	else
 		padding = ' ';
-		ret = applysharp(tmp, 'x');
+	ret = applysharp(tmp, 'x');
 	tmp = addwidth(blk.width, padding,blk.flagstore, ret);
 	if ((blk.flagstore & SH_ON) && ft_strchr(tmp,'x') != (tmp + 1)
 	 	&& (blk.flagstore & ZERO_P))
@@ -99,6 +116,8 @@ int pnf_p(t_fmtblk blk, char *con, uintmax_t value)
 		*ft_strchr(tmp,'x') = '0';
 		*(tmp + 1) = 'x';
 	}
-	write(1,tmp,ft_strlen(tmp));
-	return (ft_strlen(tmp));
+	retn = ft_strlen(tmp);
+	write(1,tmp, retn);
+	ft_strdel(&tmp);
+	return (retn);
 }

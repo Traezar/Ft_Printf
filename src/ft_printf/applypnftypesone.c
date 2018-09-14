@@ -19,6 +19,7 @@ int pnf_s(t_fmtblk blk, char *con)
 	char	padding;
 	char	*tmp;
 	char	*ret;
+	int  value;
 
 	if (con == NULL)
 	{
@@ -29,11 +30,13 @@ int pnf_s(t_fmtblk blk, char *con)
 		padding = '0';
 	if (blk.flagstore & BLNK_P || blk.flagstore == '\0')
 		padding = ' ';
-	tmp = con;
+		tmp = con;
 		tmp = addprecisioncs(blk.precision, con);
 		ret = addwidthcs(blk.width, blk.flagstore, tmp);
-		write(1,ret,ft_strlen(ret));
-		return (ft_strlen(ret));
+		value = ft_strlen(ret);
+		write(1,ret, value);
+		ft_strdel(&ret);
+		return (value);
 }
 
 int pnf_u(t_fmtblk blk, char *con)
@@ -41,6 +44,7 @@ int pnf_u(t_fmtblk blk, char *con)
 	char	padding;
 	char	*tmp;
 	char	*ret;
+	int 	value;
 
 	ret = NULL;
 	tmp = NULL;
@@ -49,23 +53,24 @@ int pnf_u(t_fmtblk blk, char *con)
 	else
 		padding = ' ';;
 	tmp = addprecisiondioux(blk.precision, con);
-	tmp = addwidth(blk.width, padding, blk.flagstore, tmp);
-	ret = tmp;
-	write(1,ret,ft_strlen(ret));
-	return (ft_strlen(ret));
+	ret = addwidth(blk.width, padding, blk.flagstore, tmp);
+	value = ft_strlen(ret);
+	write(1,ret, value);
+	ft_strdel(&ret);
+	return (value);
 }
 
 int pnf_c(t_fmtblk blk, char con)
 {
 	char	padding;
 	char	*tmp;
+	char	*ret;
 	int  value;
 
 	value = 0;
 	if (con == 0 )
 	{
 		padding = ' ';
-		tmp = ft_strnew(0);
 		write(1, &padding, blk.width == 0? 0:blk.width - 1);
 		write(1, &value, 1);
 		return (blk.width == 0? 1:blk.width);
@@ -73,7 +78,9 @@ int pnf_c(t_fmtblk blk, char con)
 	padding = ' ';
 	tmp = ft_strnew(1);
 	ft_memset(tmp, con, 1);
-	tmp = addwidth(blk.width, padding, blk.flagstore, tmp);
-	write(1, tmp, ft_strlen(tmp));
-	return (ft_strlen(tmp));
+	ret = addwidth(blk.width, padding, blk.flagstore, tmp);
+	value = ft_strlen(ret);
+	write(1,ret, value);
+	ft_strdel(&ret);
+	return (value);
 }
