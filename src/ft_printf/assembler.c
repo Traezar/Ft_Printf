@@ -76,7 +76,7 @@ int functiondispatcher(char chr, t_fmtblk head, va_list ap)
 	if (((head.modifier == 4 && chr == 'c') || (chr == 'C')) ||
 			((head.modifier == 4 && chr == 's') || (chr == 'S')))
 		(f) = &print_wide;
-	if (chr == 'o' || chr == 'O')
+	else if (chr == 'o' || chr == 'O')
 		(f) = &print_o;
 	else if(chr == 'u' || chr == 'U')
 		(f) = &print_u;
