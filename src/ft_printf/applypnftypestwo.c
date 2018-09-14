@@ -72,7 +72,7 @@ int				pnf_ws(wchar_t *con)
 	int writelen;
 
 	writelen = 0;
-	while(con != '\0')
+	while(*con != '\0')
 		writelen += pnf_wc(*con++);
 	return(writelen);
 
