@@ -75,6 +75,7 @@ int       pnf_u(t_fmtblk blk, char *con);
 int       pnf_c(t_fmtblk blk, char con);
 int       pnf_o(t_fmtblk blk, char *con, uintmax_t value);
 int       pnf_x(t_fmtblk blk, char *con,uintmax_t value);
+int 			pnf_p(t_fmtblk blk, char *con, uintmax_t value);
 int				pnf_wc(wchar_t tmp);
 int				pnf_ws(wchar_t *tmp);
 #endif

@@ -77,3 +77,28 @@ int				pnf_ws(wchar_t *con)
 	return(writelen);
 
 }
+
+int pnf_p(t_fmtblk blk, char *con, uintmax_t value)
+{
+	char	padding;
+	char	*tmp;
+	char	*ret;
+
+	if (value == 0  && blk.dot)
+			con = "";
+	tmp = addprecisiondioux(blk.precision, con);
+	if (blk.flagstore & ZERO_P && blk.precision != '0')
+		padding = '0';
+	else
+		padding = ' ';
+		ret = applysharp(tmp, 'x');
+	tmp = addwidth(blk.width, padding,blk.flagstore, ret);
+	if ((blk.flagstore & SH_ON) && ft_strchr(tmp,'x') != (tmp + 1)
+	 	&& (blk.flagstore & ZERO_P))
+	{
+		*ft_strchr(tmp,'x') = '0';
+		*(tmp + 1) = 'x';
+	}
+	write(1,tmp,ft_strlen(tmp));
+	return (ft_strlen(tmp));
+}

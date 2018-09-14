@@ -18,7 +18,7 @@ int print_x(char chr, t_fmtblk blk, va_list ap)
 	uintmax_t value;
 
 	tmp = NULL;
-	value = va_arg(ap, unsigned long long);
+	value = va_arg(ap, uintmax_t);
 	if (blk.modifier == 0)
 		tmp = ft_uintmaxtoa_base((unsigned int) value, 16, 0);
 	else if (blk.modifier == H)
@@ -33,7 +33,7 @@ int print_x(char chr, t_fmtblk blk, va_list ap)
 		tmp = ft_uintmaxtoa_base(value, 16, 0);
 	else if (blk.modifier == Z)
 		tmp = ft_uintmaxtoa_base((size_t)value, 16, 0);
-	return (pnf_x(blk, tmp, value));
+	return (chr == 'p'? pnf_p(blk, tmp, value) : pnf_x(blk, tmp, value));
 }
 
 int print_X(char chr, t_fmtblk blk, va_list ap)
