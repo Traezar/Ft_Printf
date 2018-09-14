@@ -18,11 +18,12 @@ t_fmtblk	formatblockmaker(char *str)
 
 	store = formatinit(&store);
 	store.flagstore = flaghandler(str);
-	while (!(isflag(*str) == 1))
+	while (!(isflag(*str) == 1) && *str != '\0' )
 		str++;
 	if (ft_isdigit(*str))
 		store.width = ft_atoi(str);
-	while (*str != '.' && (isconversionchr(*str) == 1) && (ismodi(*str) == 1))
+	while (*str != '.' && (isconversionchr(*str) == 1) && (ismodi(*str) == 1)
+&& *str != '\0')
 		str++;
 	if (*str == '.')
 	{
@@ -75,11 +76,9 @@ int functiondispatcher(char chr, t_fmtblk head, va_list ap)
 	if (((head.modifier == 4 && chr == 'c') || (chr == 'C')) ||
 			((head.modifier == 4 && chr == 's') || (chr == 'S')))
 		(f) = &print_wide;
-	else if (chr == 'd' || chr == 'D')
-		(f) = &print_d;
-	else if (chr == 'o' || chr == 'O')
+	if (chr == 'o' || chr == 'O')
 		(f) = &print_o;
-	else if (chr == 'u' || chr == 'U')
+	else if(chr == 'u' || chr == 'U')
 		(f) = &print_u;
 	else if (chr == 'x')
 		(f) = &print_x;
@@ -89,9 +88,11 @@ int functiondispatcher(char chr, t_fmtblk head, va_list ap)
 		(f) = &print_cs;
 	else if (chr == 'p')
 		(f) = &print_x;
-	if (chr == 'i')
+	else if (chr == 'i')
 		(f) = &print_i;
-	if (chr == '%')
+	else if (chr == '%')
 		return (print_per(head));
+	else
+		(f) = &print_d;
 	return ((*f)(chr, head, ap));
 }
