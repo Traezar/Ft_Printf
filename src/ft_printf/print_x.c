@@ -60,3 +60,18 @@ int print_X(char chr, t_fmtblk blk, va_list ap)
 		tmp = ft_uintmaxtoa_base((unsigned int)value, 16, 1);
 	return (pnf_x(blk, tmp, value));
 }
+
+int print_g(char chr, t_fmtblk blk, va_list ap)
+{
+	double fake;
+
+
+	if(blk.conver == '*')
+	{
+		chr = 'a';
+		fake = va_arg(ap,double);
+		return (0);
+	}
+	else
+		return (0);
+}

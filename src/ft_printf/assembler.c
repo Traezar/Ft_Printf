@@ -24,7 +24,8 @@ t_fmtblk	formatblockmaker(char *str)
 		store.star = *str;
 	if (ft_isdigit(*str))
 		store.width = ft_atoi(str);
-	while ((*str != '.') && (isconversionchr(*str) == 1) && (ismodi(*str) == 1))
+	while ((*str != '.') && (isconversionchr(*str) == 1) && (ismodi(*str) == 1)
+&& (*str != '\0'))
 		str++;
 	if (*str == '.')
 	{
@@ -94,7 +95,9 @@ int functiondispatcher(char chr, t_fmtblk head, va_list ap)
 		(f) = &print_i;
 	else if (chr == '%')
 		return (print_per(head));
-	else  
+	else if(chr == 'd' || chr == 'D')
 		(f) = &print_d;
+	else
+		(f) = &print_g;
 	return ((*f)(chr, head, ap));
 }

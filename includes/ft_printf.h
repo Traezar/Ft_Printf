@@ -60,6 +60,7 @@ int       print_o(char chr, t_fmtblk blk, va_list ap);
 int       print_x(char chr, t_fmtblk blk, va_list ap);
 int       print_X(char chr,t_fmtblk blk, va_list ap) ;
 int       print_i(char chr, t_fmtblk blk, va_list ap);
+int 			print_g(char chr, t_fmtblk blk, va_list ap);
 int       print_per( t_fmtblk blk);
 int       print_wide(char chr, t_fmtblk blk, va_list ap);
 char			*addprecisioncs(int precision, char *str);
