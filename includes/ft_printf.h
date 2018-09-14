@@ -36,6 +36,7 @@ typedef struct	s_fmt
 	int				width;
 	int				precision;
 	char			conver;
+	char 			star;
 	unsigned char	flagstore;
 	unsigned char	modifier;
 }				t_fmtblk;

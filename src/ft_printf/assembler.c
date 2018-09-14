@@ -18,12 +18,13 @@ t_fmtblk	formatblockmaker(char *str)
 
 	store = formatinit(&store);
 	store.flagstore = flaghandler(str);
-	while (!(isflag(*str) == 1) && *str != '\0' )
+	while (!(isflag(*str) == 1) && (*str != '\0') && (*str != '*'))
 		str++;
+	if (*str == '*')
+		store.star = *str;
 	if (ft_isdigit(*str))
 		store.width = ft_atoi(str);
-	while (*str != '.' && (isconversionchr(*str) == 1) && (ismodi(*str) == 1)
-&& *str != '\0')
+	while ((*str != '.') && (isconversionchr(*str) == 1) && (ismodi(*str) == 1))
 		str++;
 	if (*str == '.')
 	{
@@ -38,8 +39,8 @@ t_fmtblk	formatblockmaker(char *str)
 		while (isconversionchr(*str) == 1 && *str != '\0')
 			str++;
 	}
-	if (isconversionchr(*str) == 1 && *str == '\0')
-		store.conver = 'd';
+	if (isconversionchr(*str) == 1)
+		store.conver = '*';
 	else
 		store.conver = *str;
 	return (store);
@@ -53,6 +54,7 @@ t_fmtblk	formatinit(t_fmtblk	*store)
 	store->conver = 0;
 	store->flagstore = 0;
 	store->modifier = 0;
+	store->star = 0;
 	return(*store);
 }
 
@@ -92,7 +94,9 @@ int functiondispatcher(char chr, t_fmtblk head, va_list ap)
 		(f) = &print_i;
 	else if (chr == '%')
 		return (print_per(head));
-	else
+	else if (chr == 'd' || chr == 'D')
 		(f) = &print_d;
+	else
+		return (0);
 	return ((*f)(chr, head, ap));
 }
