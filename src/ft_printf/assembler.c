@@ -34,10 +34,13 @@ t_fmtblk	formatblockmaker(char *str)
 	if (isconversionchr(*str) == 1)
 	{
 		store.modifier = modihandler(&(*str));
-		while (isconversionchr(*str) == 1)
+		while (isconversionchr(*str) == 1 && *str != '\0')
 			str++;
 	}
-	store.conver = *str;
+	if (isconversionchr(*str) == 1 && *str == '\0')
+		store.conver = 'd';
+	else
+		store.conver = *str;
 	return (store);
 }
 
