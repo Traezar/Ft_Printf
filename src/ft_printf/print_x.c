@@ -19,17 +19,17 @@ int print_x(char chr, t_fmtblk blk, va_list ap)
 
 	tmp = NULL;
 	value = va_arg(ap, uintmax_t);
-	if (blk.modifier == 0)
+	if (blk.modifier == 0 && chr != 'p')
 		tmp = ft_uintmaxtoa_base((unsigned int) value, 16, 0);
-	else if (blk.modifier == H)
+	else if (blk.modifier == H && chr != 'p')
 		tmp = ft_uintmaxtoa_base((unsigned short) value, 16, 0);
-	else if (blk.modifier == HH)
+	else if (blk.modifier == HH && chr != 'p')
 		tmp = ft_uintmaxtoa_base((unsigned char) value, 16, 0);
 	else if (blk.modifier == L || chr == 'p')
 		tmp = ft_uintmaxtoa_base((unsigned long) value, 16, 0);
-	else if (blk.modifier == LL)
+	else if (blk.modifier == LL || chr != 'p')
 		tmp = ft_uintmaxtoa_base((unsigned long long) value, 16, 0);
-	else if (blk.modifier == J)
+	else if (blk.modifier == J || chr != 'p')
 		tmp = ft_uintmaxtoa_base(value, 16, 0);
 	else if (blk.modifier == Z)
 		tmp = ft_uintmaxtoa_base((size_t)value, 16, 0);
