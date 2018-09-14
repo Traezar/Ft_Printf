@@ -94,7 +94,7 @@ int functiondispatcher(char chr, t_fmtblk head, va_list ap)
 		(f) = &print_i;
 	else if (chr == '%')
 		return (print_per(head));
-	else  (chr == 'd' || chr == 'D')
+	else  
 		(f) = &print_d;
 	return ((*f)(chr, head, ap));
 }
