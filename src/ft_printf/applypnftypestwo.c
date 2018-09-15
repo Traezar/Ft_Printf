@@ -20,7 +20,10 @@ int  pnf_o(t_fmtblk blk, char *con, uintmax_t value)
 	int 	retn;
 
 	if (value == 0  && blk.dot)
-			con = "";
+	{
+		ft_strdel(&con);
+		con = "";
+	}
 	if (blk.flagstore & ZERO_P && blk.precision != '0')
 		padding = '0';
 	else
@@ -49,7 +52,10 @@ int pnf_x(t_fmtblk blk, char *con, uintmax_t value)
 	int 	retn;
 
 	if (value == 0  && blk.dot)
-			con = "";
+	{
+		ft_strdel(&con);
+		con = "";
+	}
 	tmp = addprecisiondioux(blk.precision, con);
 	if (blk.flagstore & ZERO_P && blk.precision != '0')
 		padding = '0';
@@ -102,7 +108,10 @@ int pnf_p(t_fmtblk blk, char *con, uintmax_t value)
 	int		retn;
 
 	if (value == 0  && blk.dot)
-			con = "";
+	{
+		ft_strdel(&con);
+		con = "";
+	}
 	tmp = addprecisiondioux(blk.precision, con);
 	if (blk.flagstore & ZERO_P && blk.precision != '0')
 		padding = '0';

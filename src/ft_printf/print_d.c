@@ -43,12 +43,15 @@ int pnf_d(t_fmtblk blk, char *con, intmax_t value)
 	char	*ret;
 
 	if (value == 0  && blk.dot)
-				con = "";
+	{
+		ft_strdel(&con);
+		con = "";
+	}
 	if (blk.flagstore & ZERO_P && blk.precision != '0')
 		padding = '0';
 	else
 		padding = ' ';
-	ret = addprecisiondioux(blk.precision, con);//m
+	ret = addprecisiondioux(blk.precision, con);//m&d
 	tmp = addsign(value, blk.flagstore, ret);//m&d
 	if (blk.width > blk.precision && blk.precision && blk.width)
 		padding = ' ';
@@ -70,11 +73,16 @@ char	*addprecisiondioux(int precision, char *str)
 	if (str[0] == '-')
 			len--;
 	if (precision <= 0 || precision <= len)
-			return (ft_strdup(str));
+	{
+		tmp1 = ft_strdup(str);
+		ft_strdel(&str);
+		return (tmp1);
+	}
 	init = ft_strnew(precision + len);
 	precision = precision - len;
 	ft_memset(init, '0', precision);
 	ft_strcpy(init + precision, str);
+	ft_strdel(&str);
 	return (init);
 }
 

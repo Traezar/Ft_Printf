@@ -26,6 +26,7 @@ char	*addprecisioncs(int precision, char *str)
 		ret = ft_strnew(ft_strlen(str));
 		ft_strncpy(ret, str, ft_strlen(str));
 	}
+	ft_strdel(&str);
 	return (ret);
 }
 
