@@ -44,7 +44,8 @@ int print_per( t_fmtblk blk)
 	char	*ret;
 	int		value;
 
-	ret ="%\0";
+	ret =ft_strnew(1);
+	ft_memset(ret,'%',1);
 	if (blk.flagstore & ZERO_P)
 		padding = '0';
 	else

@@ -45,7 +45,7 @@ int pnf_d(t_fmtblk blk, char *con, intmax_t value)
 	if (value == 0  && blk.dot)
 	{
 		ft_strdel(&con);
-		con = "";
+		con = ft_strnew(0);
 	}
 	if (blk.flagstore & ZERO_P && blk.precision != '0')
 		padding = '0';
@@ -74,9 +74,9 @@ char	*addprecisiondioux(int precision, char *str)
 			len--;
 	if (precision <= 0 || precision <= len)
 	{
-		tmp1 = ft_strdup(str);
+		init = ft_strdup(str);
 		ft_strdel(&str);
-		return (tmp1);
+		return (init);
 	}
 	init = ft_strnew(precision + len);
 	precision = precision - len;

@@ -26,7 +26,6 @@ char	*addprecisioncs(int precision, char *str)
 		ret = ft_strnew(ft_strlen(str));
 		ft_strncpy(ret, str, ft_strlen(str));
 	}
-	ft_strdel(&str);
 	return (ret);
 }
 
@@ -69,23 +68,22 @@ char	*applysharp(char *str, char c)
 		tmp = ft_strnew(ft_strlen(str));
 		ft_memset(tmp, '0', ft_strlen(str));
 		ft_strcpy((tmp + 1), str);
-		str = tmp;
-		str[0] = '0';
+		tmp[0] = '0';
 	}
 	else if (c == 'x' || c == 'X')
 	{
 		tmp = ft_strnew(ft_strlen(str) + 2);
 		ft_memset(tmp, '0', ft_strlen(str) + 2);
 		ft_strcpy((tmp + 2), str);
-		str = tmp;
-		str[0] = '0';
+		tmp[0] = '0';
 		if (c == 'x')
-			str[1] = 'x';
+			tmp[1] = 'x';
 		else
-			str[1] = 'X';
+			tmp[1] = 'X';
 	}
-	ret = ft_strdup(str);
+	ret = ft_strdup(tmp);
 	ft_strdel(&str);
+	ft_strdel(&tmp);
 	return (ret);
 }
 
