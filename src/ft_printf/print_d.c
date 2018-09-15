@@ -6,16 +6,16 @@
 /*   By: rsathiad <3kiraj@gmail.com>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/09/03 23:27:34 by rsathiad          #+#    #+#             */
-/*   Updated: 2018/09/03 23:29:20 by rsathiad         ###   ########.fr       */
+/*   Updated: 2018/09/15 01:15:38 by rsathiad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/ft_printf.h"
 
-int print_d(char chr, t_fmtblk blk, va_list ap)
+int		print_d(char chr, t_fmtblk blk, va_list ap)
 {
-	char	*tmp;
-	intmax_t 	value;
+	char		*tmp;
+	intmax_t	value;
 
 	tmp = NULL;
 	value = va_arg(ap, intmax_t);
@@ -26,9 +26,9 @@ int print_d(char chr, t_fmtblk blk, va_list ap)
 	else if (blk.modifier == 2 && chr == 'd')
 		tmp = ft_itoa((char)value);
 	else if ((blk.modifier == 4 && chr == 'd') || (chr == 'D'))
-		tmp = ft_intmaxtoa_base((long) value, 10, 0);
+		tmp = ft_intmaxtoa_base((long)value, 10, 0);
 	else if (blk.modifier == 8 && chr == 'd')
-		tmp = ft_intmaxtoa_base((long long) value, 10, 0);
+		tmp = ft_intmaxtoa_base((long long)value, 10, 0);
 	else if (blk.modifier == 16 && chr == 'd')
 		tmp = ft_intmaxtoa_base(value, 10, 0);
 	else if (blk.modifier == 32 && chr == 'd')
@@ -36,13 +36,13 @@ int print_d(char chr, t_fmtblk blk, va_list ap)
 	return (pnf_d(blk, tmp, value));
 }
 
-int pnf_d(t_fmtblk blk, char *con, intmax_t value)
+int		pnf_d(t_fmtblk blk, char *con, intmax_t value)
 {
 	char	padding;
 	char	*tmp;
 	char	*ret;
 
-	if (value == 0  && blk.dot)
+	if (value == 0 && blk.dot)
 	{
 		ft_strdel(&con);
 		con = ft_strnew(0);
@@ -51,15 +51,15 @@ int pnf_d(t_fmtblk blk, char *con, intmax_t value)
 		padding = '0';
 	else
 		padding = ' ';
-	ret = addprecisiondioux(blk.precision, con);//m&d
-	tmp = addsign(value, blk.flagstore, ret);//m&d
+	ret = addprecisiondioux(blk.precision, con);
+	tmp = addsign(value, blk.flagstore, ret);
 	if (blk.width > blk.precision && blk.precision && blk.width)
 		padding = ' ';
-	ret = addwidth(blk.width, padding, blk.flagstore, tmp);//m&d
-	tmp = addspace(value, blk.flagstore, ret);//m&d
-	ret = checkneg(value, padding, blk.precision, tmp);//m&d
+	ret = addwidth(blk.width, padding, blk.flagstore, tmp);
+	tmp = addspace(value, blk.flagstore, ret);
+	ret = checkneg(value, padding, blk.precision, tmp);
 	value = ft_strlen(ret);
-	write(1,ret,value);
+	write(1, ret, value);
 	ft_strdel(&ret);
 	return (value);
 }
@@ -71,7 +71,7 @@ char	*addprecisiondioux(int precision, char *str)
 
 	len = ft_strlen(str);
 	if (str[0] == '-')
-			len--;
+		len--;
 	if (precision <= 0 || precision <= len)
 	{
 		init = ft_strdup(str);

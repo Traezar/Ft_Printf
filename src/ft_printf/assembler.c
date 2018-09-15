@@ -6,7 +6,7 @@
 /*   By: rsathiad <3kiraj@gmail.com>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/09/03 22:11:43 by rsathiad          #+#    #+#             */
-/*   Updated: 2018/09/06 15:02:49 by rsathiad         ###   ########.fr       */
+/*   Updated: 2018/09/15 14:13:40 by rsathiad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,15 +25,9 @@ t_fmtblk	formatblockmaker(char *str)
 	if (ft_isdigit(*str))
 		store.width = ft_atoi(str);
 	while ((*str != '.') && (isconversionchr(*str) == 1) && (ismodi(*str) == 1)
-&& (*str != '\0'))
+			&& (*str != '\0'))
 		str++;
-	if (*str == '.')
-	{
-		store.dot = 1;
-		store.precision = ft_atoi(++str);
-		while (ft_isdigit(*str))
-			str++;
-	}
+	str = precisionndot(str, &store);
 	if (isconversionchr(*str) == 1)
 	{
 		store.modifier = modihandler(&(*str));
@@ -47,7 +41,7 @@ t_fmtblk	formatblockmaker(char *str)
 	return (store);
 }
 
-t_fmtblk	formatinit(t_fmtblk	*store)
+t_fmtblk	formatinit(t_fmtblk *store)
 {
 	store->dot = 0;
 	store->width = 0;
@@ -56,10 +50,10 @@ t_fmtblk	formatinit(t_fmtblk	*store)
 	store->flagstore = 0;
 	store->modifier = 0;
 	store->star = 0;
-	return(*store);
+	return (*store);
 }
 
-int		ismodi(char c)
+int			ismodi(char c)
 {
 	char *s;
 
@@ -72,7 +66,7 @@ int		ismodi(char c)
 	return (1);
 }
 
-int functiondispatcher(char chr, t_fmtblk head, va_list ap)
+int			functiondispatcher(char chr, t_fmtblk head, va_list ap)
 {
 	int(*f)(char chr, t_fmtblk head, va_list ap);
 
@@ -81,21 +75,19 @@ int functiondispatcher(char chr, t_fmtblk head, va_list ap)
 		(f) = &print_wide;
 	else if (chr == 'o' || chr == 'O')
 		(f) = &print_o;
-	else if(chr == 'u' || chr == 'U')
+	else if (chr == 'u' || chr == 'U')
 		(f) = &print_u;
-	else if (chr == 'x')
+	else if ((chr == 'x') || (chr == 'p'))
 		(f) = &print_x;
 	else if (chr == 'X')
-		(f) = &print_X;
+		(f) = &print_lx;
 	else if (chr == 'c' || chr == 's')
 		(f) = &print_cs;
-	else if (chr == 'p')
-		(f) = &print_x;
 	else if (chr == 'i')
 		(f) = &print_i;
 	else if (chr == '%')
 		return (print_per(head));
-	else if(chr == 'd' || chr == 'D')
+	else if (chr == 'd' || chr == 'D')
 		(f) = &print_d;
 	else
 		(f) = &print_g;

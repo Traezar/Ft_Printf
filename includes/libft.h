@@ -6,7 +6,7 @@
 /*   By: rsathiad <3kiraj@gmail.com>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/07/09 10:54:05 by rsathiad          #+#    #+#             */
-/*   Updated: 2018/09/06 13:56:28 by rsathiad         ###   ########.fr       */
+/*   Updated: 2018/09/15 14:20:34 by rsathiad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,13 +85,13 @@ void				ft_lstiter(t_list *lst, void (*f)(t_list *elem));
 t_list				*ft_lstmap(t_list *lst, t_list *(*f)(t_list *elem));
 unsigned char		ft_setbit (char name, int position);
 unsigned char		ft_clearbit (char name, int position);
-char			*ft_lltoa_base(long long num, unsigned int base,
-								int is_cap);
+char				*ft_lltoa_base(long long num, unsigned int base,
+					int is_cap);
 char				*ft_uintmaxtoa_base(uintmax_t num, unsigned int base,
-								int is_cap);
+					int is_cap);
 char				*ft_intmaxtoa_base(intmax_t num, unsigned int base,
-								int is_cap);
-char			*ft_ltoa_base(long num, unsigned int base,
-																int is_cap);
+					int is_cap);
+char				*ft_ltoa_base(long num, unsigned int base,
+					int is_cap);
 
 #endif

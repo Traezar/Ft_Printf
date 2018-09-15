@@ -1,27 +1,19 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strncpy.c                                       :+:      :+:    :+:   */
+/*   ft_freeandretint.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: rsathiad <3kiraj@gmail.com>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2018/07/10 14:36:28 by rsathiad          #+#    #+#             */
-/*   Updated: 2018/09/15 00:28:28 by rsathiad         ###   ########.fr       */
+/*   Created: 2018/09/15 01:54:40 by rsathiad          #+#    #+#             */
+/*   Updated: 2018/09/15 02:01:51 by rsathiad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/libft.h"
 
-char	*ft_strncpy(char *dst, const char *src, size_t len)
+int		ft_freeandretint(char *str, int ret)
 {
-	size_t	i;
-
-	i = 0;
-	while (src[i] != '\0' && i < len)
-	{
-		dst[i] = src[i];
-		i++;
-	}
-	dst[i] = '\0';
-	return (dst);
+	ft_strdel(&str);
+	return (ret);
 }

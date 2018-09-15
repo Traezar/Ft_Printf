@@ -38,12 +38,13 @@ libftbasic =	ft_memset.c ft_bzero.c ft_memcpy.c ft_memccpy.c ft_memmove.c \
 		ft_putstr_fd.c ft_putendl_fd.c ft_putnbr_fd.c ft_lstnew.c ft_itoabase.c \
 		ft_lstdelone.c ft_lstdel.c ft_lstadd.c ft_lstiter.c ft_lstmap.c \
 		ft_setbit.c ft_clearbit.c ft_uintmaxtoa_base.c ft_subnjoin.c\
-		ft_ltoa_base.c ft_lltoa_base.c ft_intmaxtoa_base.c
+		ft_ltoa_base.c ft_lltoa_base.c ft_intmaxtoa_base.c ft_freeandretint.c \
+		ft_freeandretstr.c
 
 
 printf =	ft_printf.c assembler.c conversion.c precisionandwidth.c \
 		   applypnftypesone.c applypnftypestwo.c print_cs.c \
-		   print_d.c print_o.c print_x.c 
+		   print_d.c print_o.c print_x.c misc_funcs.c 
 
 $(NAME):
 			gcc $(CFLAGS) $(SRC) -I includes/libftprintf $(HDR)

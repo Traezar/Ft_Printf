@@ -6,7 +6,7 @@
 /*   By: rsathiad <3kiraj@gmail.com>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/09/03 22:32:16 by rsathiad          #+#    #+#             */
-/*   Updated: 2018/09/03 22:46:24 by rsathiad         ###   ########.fr       */
+/*   Updated: 2018/09/15 01:25:39 by rsathiad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,7 +59,7 @@ char	flaghandler(char *str)
 	while (isconversionchr(*str) == 1 && !(ft_isdigit(*str) && *str != '0')
 	&& *str != '.')
 	{
-		if (*str == '0' )
+		if (*str == '0')
 			store = ft_setbit(store, 4);
 		if (*str == '#')
 			store = ft_setbit(store, 0);
@@ -72,7 +72,7 @@ char	flaghandler(char *str)
 		str++;
 	}
 	if (isconversionchr(*str) == 'O' || isconversionchr(*str) == 'X')
-			store = ft_setbit(store, 5);
+		store = ft_setbit(store, 5);
 	if ((store & BLNK_P) && (store & SIGNED))
 		store = ft_clearbit(store, 2);
 	if ((store & ZERO_P) && (store & RT_P))
